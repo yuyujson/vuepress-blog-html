@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>自定义redis锁注解 | 余瑜的博客</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/yuyujson/cdn-images@latest/blog-images/20210214155749.jpg">
+    <meta name="description" content="积一时之跬步,臻千里之遥程">
+    <meta name="keywords" content="java博客,博客,java,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    <link rel="preload" href="/assets/css/0.styles.e4f675a4.css" as="style"><link rel="preload" href="/assets/js/app.e4c05028.js" as="script"><link rel="preload" href="/assets/js/3.f13b74f1.js" as="script"><link rel="preload" href="/assets/js/40.670388ec.js" as="script"><link rel="prefetch" href="/assets/js/1.8d4e34ba.js"><link rel="prefetch" href="/assets/js/10.71b17b3d.js"><link rel="prefetch" href="/assets/js/11.2f787bca.js"><link rel="prefetch" href="/assets/js/12.0fe6fae3.js"><link rel="prefetch" href="/assets/js/13.f397b0b1.js"><link rel="prefetch" href="/assets/js/14.ade03e37.js"><link rel="prefetch" href="/assets/js/15.59864dc6.js"><link rel="prefetch" href="/assets/js/16.648e9edd.js"><link rel="prefetch" href="/assets/js/17.aeca8e37.js"><link rel="prefetch" href="/assets/js/18.94aafeab.js"><link rel="prefetch" href="/assets/js/19.1b0e7791.js"><link rel="prefetch" href="/assets/js/20.ddb31c7c.js"><link rel="prefetch" href="/assets/js/21.e3638a05.js"><link rel="prefetch" href="/assets/js/22.a3d23b01.js"><link rel="prefetch" href="/assets/js/23.e8d02c52.js"><link rel="prefetch" href="/assets/js/24.804ae42f.js"><link rel="prefetch" href="/assets/js/25.bd6acff1.js"><link rel="prefetch" href="/assets/js/26.7b991be5.js"><link rel="prefetch" href="/assets/js/27.302a9de3.js"><link rel="prefetch" href="/assets/js/28.43a80df8.js"><link rel="prefetch" href="/assets/js/29.d55ca851.js"><link rel="prefetch" href="/assets/js/30.bc1de764.js"><link rel="prefetch" href="/assets/js/31.00d619fb.js"><link rel="prefetch" href="/assets/js/32.36ce1461.js"><link rel="prefetch" href="/assets/js/33.a0026331.js"><link rel="prefetch" href="/assets/js/34.ab341a6f.js"><link rel="prefetch" href="/assets/js/35.c89eea67.js"><link rel="prefetch" href="/assets/js/36.754c16f2.js"><link rel="prefetch" href="/assets/js/37.3538736b.js"><link rel="prefetch" href="/assets/js/38.94240cc8.js"><link rel="prefetch" href="/assets/js/39.54970ba9.js"><link rel="prefetch" href="/assets/js/4.96ebd32a.js"><link rel="prefetch" href="/assets/js/41.c5c8a2a0.js"><link rel="prefetch" href="/assets/js/42.2365bc8c.js"><link rel="prefetch" href="/assets/js/43.cdfe50ff.js"><link rel="prefetch" href="/assets/js/44.769d399d.js"><link rel="prefetch" href="/assets/js/45.5d20deab.js"><link rel="prefetch" href="/assets/js/46.7cc9cbbb.js"><link rel="prefetch" href="/assets/js/47.b81d323f.js"><link rel="prefetch" href="/assets/js/48.99a70e43.js"><link rel="prefetch" href="/assets/js/49.2f6957b2.js"><link rel="prefetch" href="/assets/js/5.a5b0fc6d.js"><link rel="prefetch" href="/assets/js/50.621156cf.js"><link rel="prefetch" href="/assets/js/51.56aae748.js"><link rel="prefetch" href="/assets/js/52.05f0d7d2.js"><link rel="prefetch" href="/assets/js/53.1475a082.js"><link rel="prefetch" href="/assets/js/54.502be274.js"><link rel="prefetch" href="/assets/js/55.56d7f949.js"><link rel="prefetch" href="/assets/js/56.8baf2718.js"><link rel="prefetch" href="/assets/js/57.b4a1e1de.js"><link rel="prefetch" href="/assets/js/58.674560b6.js"><link rel="prefetch" href="/assets/js/59.44a474ee.js"><link rel="prefetch" href="/assets/js/6.58748959.js"><link rel="prefetch" href="/assets/js/60.335a79ad.js"><link rel="prefetch" href="/assets/js/61.d64ffec2.js"><link rel="prefetch" href="/assets/js/62.9254cac7.js"><link rel="prefetch" href="/assets/js/63.06eae571.js"><link rel="prefetch" href="/assets/js/64.8a78b2b7.js"><link rel="prefetch" href="/assets/js/65.52d76318.js"><link rel="prefetch" href="/assets/js/66.c3842e5d.js"><link rel="prefetch" href="/assets/js/67.841ed81d.js"><link rel="prefetch" href="/assets/js/68.64a27e1d.js"><link rel="prefetch" href="/assets/js/69.5669e15e.js"><link rel="prefetch" href="/assets/js/7.bbba93d7.js"><link rel="prefetch" href="/assets/js/70.fdd1cda0.js"><link rel="prefetch" href="/assets/js/71.094ee685.js"><link rel="prefetch" href="/assets/js/72.3fc00733.js"><link rel="prefetch" href="/assets/js/73.f902d2f6.js"><link rel="prefetch" href="/assets/js/74.82ccf2da.js"><link rel="prefetch" href="/assets/js/75.b2db0972.js"><link rel="prefetch" href="/assets/js/76.46aaf82c.js"><link rel="prefetch" href="/assets/js/77.6085a47a.js"><link rel="prefetch" href="/assets/js/78.88c16d5b.js"><link rel="prefetch" href="/assets/js/79.4e5e652d.js"><link rel="prefetch" href="/assets/js/8.b8266f3d.js"><link rel="prefetch" href="/assets/js/80.fdc9d36a.js"><link rel="prefetch" href="/assets/js/81.9d846bc3.js"><link rel="prefetch" href="/assets/js/82.091c3bbf.js"><link rel="prefetch" href="/assets/js/83.0a167a9a.js"><link rel="prefetch" href="/assets/js/84.5996e773.js"><link rel="prefetch" href="/assets/js/85.019923c1.js"><link rel="prefetch" href="/assets/js/86.51e80211.js"><link rel="prefetch" href="/assets/js/87.aa5c663f.js"><link rel="prefetch" href="/assets/js/88.a6cc6029.js"><link rel="prefetch" href="/assets/js/89.53437884.js"><link rel="prefetch" href="/assets/js/9.8f4191f1.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e4f675a4.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu have-body-img"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="https://cdn.jsdelivr.net/gh/yuyujson/cdn-images@latest/blog-images/20210216171303.svg" alt="余瑜的博客" class="logo"> <span class="site-name can-hide">余瑜的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JAVA" class="dropdown-title"><a href="/pages/224f8e/" class="link-title">JAVA</a> <span class="title" style="display:none;">JAVA</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/224f8e/" class="nav-link">并发</a></li><li class="dropdown-item"><!----> <a href="/pages/878afc/" class="nav-link">线程池</a></li><li class="dropdown-item"><!----> <a href="/pages/5d39a7/" class="nav-link">spring</a></li><li class="dropdown-item"><!----> <a href="/pages/511867/" class="nav-link">maven</a></li><li class="dropdown-item"><!----> <a href="/pages/2cabac/" class="nav-link">其他</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><a href="/pages/88ba01/" class="link-title">数据库</a> <span class="title" style="display:none;">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/88ba01/" class="nav-link">redis</a></li><li class="dropdown-item"><!----> <a href="/pages/e3d657/" class="nav-link">mysql</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="运维" class="dropdown-title"><a href="/pages/c0a252/" class="link-title">运维</a> <span class="title" style="display:none;">运维</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/c0a252/" class="nav-link">linux</a></li><li class="dropdown-item"><!----> <a href="/pages/2a2df0/" class="nav-link">zookeeper</a></li><li class="dropdown-item"><!----> <a href="/pages/54315c/" class="nav-link">docker</a></li><li class="dropdown-item"><!----> <a href="/pages/7516d4/" class="nav-link">terminal</a></li><li class="dropdown-item"><!----> <a href="/pages/4ceec8/" class="nav-link">kong插件开发</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="算法" class="dropdown-title"><a href="/pages/cad352/" class="link-title">算法</a> <span class="title" style="display:none;">算法</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/cad352/" class="nav-link">资料</a></li><li class="dropdown-item"><!----> <a href="/pages/877b28/" class="nav-link">leetCode-简单</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/pages/c33358/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/c33358/" class="nav-link">blog</a></li><li class="dropdown-item"><!----> <a href="/pages/91e143/" class="nav-link">其他</a></li></ul></div></div><div class="nav-item"><a href="/pages/44ff0f/" class="nav-link">关于</a></div> <a href="https://github.com/yuyujson" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar" style="display:none;"><!----> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JAVA" class="dropdown-title"><a href="/pages/224f8e/" class="link-title">JAVA</a> <span class="title" style="display:none;">JAVA</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/224f8e/" class="nav-link">并发</a></li><li class="dropdown-item"><!----> <a href="/pages/878afc/" class="nav-link">线程池</a></li><li class="dropdown-item"><!----> <a href="/pages/5d39a7/" class="nav-link">spring</a></li><li class="dropdown-item"><!----> <a href="/pages/511867/" class="nav-link">maven</a></li><li class="dropdown-item"><!----> <a href="/pages/2cabac/" class="nav-link">其他</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><a href="/pages/88ba01/" class="link-title">数据库</a> <span class="title" style="display:none;">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/88ba01/" class="nav-link">redis</a></li><li class="dropdown-item"><!----> <a href="/pages/e3d657/" class="nav-link">mysql</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="运维" class="dropdown-title"><a href="/pages/c0a252/" class="link-title">运维</a> <span class="title" style="display:none;">运维</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/c0a252/" class="nav-link">linux</a></li><li class="dropdown-item"><!----> <a href="/pages/2a2df0/" class="nav-link">zookeeper</a></li><li class="dropdown-item"><!----> <a href="/pages/54315c/" class="nav-link">docker</a></li><li class="dropdown-item"><!----> <a href="/pages/7516d4/" class="nav-link">terminal</a></li><li class="dropdown-item"><!----> <a href="/pages/4ceec8/" class="nav-link">kong插件开发</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="算法" class="dropdown-title"><a href="/pages/cad352/" class="link-title">算法</a> <span class="title" style="display:none;">算法</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/cad352/" class="nav-link">资料</a></li><li class="dropdown-item"><!----> <a href="/pages/877b28/" class="nav-link">leetCode-简单</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/pages/c33358/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/c33358/" class="nav-link">blog</a></li><li class="dropdown-item"><!----> <a href="/pages/91e143/" class="nav-link">其他</a></li></ul></div></div><div class="nav-item"><a href="/pages/44ff0f/" class="nav-link">关于</a></div> <a href="https://github.com/yuyujson" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>并发</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>线程池</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>spring</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>maven</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>其他</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/2cabac/" class="sidebar-link">io流</a></li><li><a href="/pages/86937d/" class="sidebar-link">innoDB存储引擎</a></li><li><a href="/pages/b0015d/" class="sidebar-link">并发4:懒汉模式与枚举模式</a></li><li><a href="/pages/3e3361/" aria-current="page" class="active sidebar-link">自定义redis锁注解</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/3e3361/#构思" class="sidebar-link">构思</a></li><li class="sidebar-sub-header"><a href="/pages/3e3361/#启动类" class="sidebar-link">启动类</a></li><li class="sidebar-sub-header"><a href="/pages/3e3361/#自定义注解" class="sidebar-link">自定义注解</a></li><li class="sidebar-sub-header"><a href="/pages/3e3361/#redis锁注解" class="sidebar-link">redis锁注解</a></li><li class="sidebar-sub-header"><a href="/pages/3e3361/#aspect解析注解" class="sidebar-link">Aspect解析注解</a></li><li class="sidebar-sub-header"><a href="/pages/3e3361/#注意事项" class="sidebar-link">注意事项</a></li></ul></li><li><a href="/pages/31d9a6/" class="sidebar-link">自定义zkLock</a></li><li><a href="/pages/8ebd07/" class="sidebar-link">记一次去除Result处理</a></li></ul></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-1cd794fe><div class="articleInfo" data-v-1cd794fe><ul class="breadcrumbs" data-v-1cd794fe><li data-v-1cd794fe><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-1cd794fe></a></li> <li data-v-1cd794fe><span data-v-1cd794fe>JAVA</span></li> <li data-v-1cd794fe><span data-v-1cd794fe>其他</span></li> <!----></ul> <div class="info" data-v-1cd794fe><div title="作者" class="author iconfont icon-touxiang" data-v-1cd794fe><a href="javascript:;" data-v-1cd794fe>余瑜</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-1cd794fe><a href="javascript:;" data-v-1cd794fe>2019-12-11</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">
+          自定义redis锁注解
+        </h1> <!----> <div class="theme-vdoing-content content__default"><blockquote><p>项目中经常使用的redis锁写起来十分繁琐, 同样的代码需要编写多次. 于是想到使用注解方式来解决</p></blockquote> <h2 id="构思"><a href="#构思" class="header-anchor">#</a> 构思</h2> <ol><li>由于使用注解不能确定返回值, 所以采用自定义异常的方式来解决</li> <li>redis锁一般需要指定过期时间, 考虑到特殊情况设置默认过期时间为永久</li></ol> <h2 id="启动类"><a href="#启动类" class="header-anchor">#</a> 启动类</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 开启AOP代理自动配置 
+// exposeProxy = true 表示通过aop框架暴露该代理对象，aopContext能够访问
+@EnableAspectJAutoProxy(exposeProxy = true)
+public class SalesApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SalesApplication.class, args);
+    }
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h2 id="自定义注解"><a href="#自定义注解" class="header-anchor">#</a> 自定义注解</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>/**
+ * Classname：RedisLockException
+ * Description：自定义redis异常
+ * date：2019-12-09 15:49
+ * author：yuyu
+ */
+public class RedisLockException extends RuntimeException {
+
+    /**
+     * Constructs a new runtime exception with the specified detail message.
+     * The cause is not initialized, and may subsequently be initialized by a
+     * call to {@link #initCause}.
+     *
+     * @param message the detail message. The detail message is saved for
+     *                later retrieval by the {@link #getMessage()} method.
+     */
+    public RedisLockException(String message) {
+        super(message);
+    }
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h2 id="redis锁注解"><a href="#redis锁注解" class="header-anchor">#</a> redis锁注解</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>
+/**
+ *  警示: key 与 enumKey 二选一, 必须设置一个!!!
+ *  警示: 如果 key 与 enumKey 都设置, 则使用key加锁
+ *  警示: 如果redis加锁失败会抛出 RedisLockException 异常
+ *  警示: 类内部方法调用不生效, 如果想生效请重新从redis中获取该对象再进行调用
+ *      例: InvTransactionsSendServiceImpl thisBean = SpringContextUtil.getBean(InvTransactionsSendServiceImpl.class);
+ *          thisBean.sendINVTransactionLock(beginDate, endDate);
+ *  例:
+ *  String msg;
+ *  try {
+ *      // testService.test(a) 该方法添加了 @RedisLock
+ *      msg = testService.test(a);
+ *  } catch (RedisLockException e) {
+ *      msg = e.getMessage();
+ *  } catch (Exception e) {
+ *      log.error(&quot;方法异常&quot;, e);
+ *      msg = &quot;方法异常&quot;;
+ *  }
+ *   return msg;
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface RedisLock {
+
+    /**
+     * redis 中的key
+     */
+    String key() default SalesConstant.REDIS_LOCK_DEFAULT_KEY;
+
+    /**
+     * 枚举类redis key
+     */
+    SalesConstant.RedisLockKey enumKey() default SalesConstant.RedisLockKey.DEFAULT_VALUE;
+
+    /**
+     * 秒，key过期时间，如果小于0则永久, 默认永久
+     */
+    long expired() default -1;
+
+}
+
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br></div></div><h2 id="aspect解析注解"><a href="#aspect解析注解" class="header-anchor">#</a> Aspect解析注解</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.secoo.sales.common.annotation.redis;
+
+
+import com.secoo.sales.common.constant.SalesConstant;
+import com.secoo.sales.common.exception.RedisLockException;
+import com.secooframework.redis.SecooRedisTemplate;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.Resource;
+import java.lang.reflect.Method;
+
+/**
+ * Classname：RedisLockAspect
+ * Description：redis锁切面
+ * date：2019-12-09 15:03
+ * author：yuyu
+ */
+@Aspect
+public class RedisLockAspect {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Resource
+    private SecooRedisTemplate secooRedisTemplate;
+
+
+    @Pointcut(&quot;@annotation(com.secoo.sales.common.annotation.redis.RedisLock)&quot;)
+    private void pointcut() {
+    }
+
+
+    /**
+     * 环绕通知
+     *
+     * @param joinPoint 可用于执行切点的类
+     * @throws Throwable
+     */
+    @Around(&quot;pointcut()&quot;)
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+        RedisLock annotation = getMethod(joinPoint).getAnnotation(RedisLock.class);
+        // 获取不是默认实现的key, 优先选择 key()
+        String key = annotation.key();
+        if (key.equals(SalesConstant.RedisLockKey.DEFAULT_VALUE.getCode())) {
+            key = annotation.enumKey().getCode();
+            if (key.equals(SalesConstant.RedisLockKey.DEFAULT_VALUE.getCode())) {
+                // key() 与 enumKey() 必须实现一个, 如果两个都是默认实现则直接抛出异常
+                logger.info(&quot;Redis加锁未指定key&quot;);
+                throw new RedisLockException(&quot;Redis加锁未指定key!&quot;);
+            }
+        }
+
+        // 加锁
+        Boolean flag = secooRedisTemplate.setnx(key, &quot;1&quot;);
+
+        // 过期时间
+        long expiredTime = annotation.expired();
+
+        if (flag) {
+            logger.info(&quot;redis加锁成功-key: &quot; + key);
+            // 如果过期时间大于0 , 则设置过期时间
+            if (expiredTime &gt; 0) {
+                secooRedisTemplate.expire(key, expiredTime);
+            }
+
+            try {
+                return (Object) joinPoint.proceed();
+            } catch (Exception e) {
+                throw e;
+            } finally {
+                // 删除锁
+                secooRedisTemplate.del(key);
+                logger.info(&quot;redis删除锁成功-key: &quot; + key);
+            }
+        } else {
+            logger.info(&quot;redis加锁失败-key: &quot; + key);
+            throw new RedisLockException(&quot;Redis加锁失败&quot;);
+        }
+    }
+
+    private Method getMethod(ProceedingJoinPoint joinPoint) throws NoSuchMethodException {
+        Signature signature = joinPoint.getSignature();
+        MethodSignature methodSignature = (MethodSignature) signature;
+        Method agentMethod = methodSignature.getMethod();
+        return joinPoint.getTarget().getClass().getMethod(agentMethod.getName(), agentMethod.getParameterTypes());
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br></div></div><h2 id="注意事项"><a href="#注意事项" class="header-anchor">#</a> 注意事项</h2> <p>类内部调用无法触发切面代理, 会导致redis锁无效, 如果想使用需从spring中再次获取该对象并调用</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Service
+public class Demo {
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+    
+    public void method1(){
+        Demo thisBean = SpringContextUtil.getBean(Demo.class);
+        try {
+            thisBean.method2();
+        } catch (RedisLockException e) {
+            log.warn(&quot;redis加锁失败，返回值&quot; + e.getMessage());
+        } catch (Exception e) {
+            log.error(&quot;操作异常&quot;, e);
+        }
+    }
+    
+    @RedisLock(enumKey = SalesConstant.RedisLockKey.MSG_INTEGRATION)
+    public void method2(){
+
+    }
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div></div></div> <!----> <div class="page-edit"><!----> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2021/02/16, 15:47:09</span></div></div> <div class="page-nav-wapper"><!----> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/pages/b0015d/" class="prev">并发4:懒汉模式与枚举模式</a></span> <span class="next"><a href="/pages/31d9a6/">自定义zkLock</a>→
+      </span></p></div></div></div> <!----></main></div> <div class="footer"><div class="icons"><a href="mailto:yuy9501@126.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/yuyujson" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=5381381410" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2018-2021
+    <span>逆光世间 | 备案号: <a href="https://beian.miit.gov.cn" target="_blank">京ICP备19016086号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <div class="body-bg" style="background:url() center center / cover no-repeat;opacity:0.5;"></div> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.e4c05028.js" defer></script><script src="/assets/js/3.f13b74f1.js" defer></script><script src="/assets/js/40.670388ec.js" defer></script>
+  </body>
+</html>
